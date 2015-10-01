@@ -44,7 +44,7 @@ class path {
   std::string native_;
 };
 
-path operator/(path const& left, path const& right) {
+inline path operator/(path const& left, path const& right) {
   return path(left) /= right;
 }
 
