@@ -1,0 +1,50 @@
+#include <string>
+
+// horrible, non-portable, untested,
+// will-blow-up-if-you-look-at-it implementation
+// of path because libc++ doesn't have it.
+
+namespace std {
+namespace experimental {
+namespace filesystem {
+
+class path {
+ public:
+  path() = default;
+  path(std::string const& source) : native_(source) {};
+  path(path const&) = default;
+  ~path() = default;
+
+  path& operator/=(path const& source) {
+    native_ += '/';
+    // nah, we're not stripping redundant slashes or anything.
+    native_ += source;
+    return *this;
+  }
+
+  std::string const& native() const {
+    return native_;
+  }
+
+  operator std::string() const {
+    return native_;
+  }
+
+  // Doesn't actually replace anything.
+  path& replace_extension(path const& replacement) {
+    native_ += '.';
+    native_ += replacement;
+    return *this;
+  }
+
+ private:
+  std::string native_;
+};
+
+path operator/(path const& left, path const& right) {
+  return path(left) /= right;
+}
+
+}
+}
+}
