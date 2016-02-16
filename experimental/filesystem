@@ -48,6 +48,11 @@ inline path operator/(path const& left, path const& right) {
   return path(left) /= right;
 }
 
+inline ostream& operator<<(ostream& stream, path const& _path) {
+  stream << _path.native();
+  return stream;
+}
+
 }
 }
 }
