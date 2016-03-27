@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iomanip>
 #include <string>
 
 // horrible, non-portable, untested,
@@ -46,6 +47,12 @@ class path {
 
 inline path operator/(path const& left, path const& right) {
   return path(left) /= right;
+}
+
+template<typename Character, typename Traits>
+std::basic_ostream<Character, Traits>&
+operator<<(std::basic_ostream<Character, Traits>& os, const path& p) {
+  return os << std::quoted((string)p);
 }
 
 }
