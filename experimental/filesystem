@@ -26,6 +26,11 @@ class path {
     return *this;
   }
 
+  path& operator+=(path const& source) {
+    native_ += source;
+    return *this;
+  }
+
   std::string const& native() const {
     return native_;
   }
